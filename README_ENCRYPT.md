@@ -20,57 +20,52 @@ Within the first 2 days we expect you to deliver the first built-in cipher: **AE
   * PR passes CI (lint ➜ build ➜ tests ➜ type-check)
 
 **Success criteria**  
-  * `encrypt()` + `decrypt()` produce identical plaintext for all test vectors.  
-  * All existing SDK tests remain green; bundle size increase ≤ 5 KB gzipped.  
-  * No new *crypto-lint* warnings (ESLint rule: `no-weak-crypto`).
+  * `encrypt()` + `decrypt()` return identical plaintext for all NIST test vectors.  
+  * No existing SDK tests regress; bundle-size increase ≤ 5 KB gzipped.  
+  * No new `eslint-plugin-security` / `no-weak-crypto` warnings.  
+  * Work completes in **1 dev-day** (timeline confirmed by Ulad).
 
 ---
 
 ## Quick-Start for External Contributors
 
-> **Goal:** clone the repo, run the new AES-256 tests, and see them pass in < 10 minutes.
-
 ### 1 · Clone & bootstrap
 
 ```bash
+# 1. Clone the repo
 git clone https://github.com/Cerebellum-Network/cere-ddc-sdk-js.git
 cd cere-ddc-sdk-js
-pnpm i          # workspace install
+
+# 2. Use Node.js v18.17.1 (recommended); then install deps
+pnpm i         # workspace-wide
 ````
 
-### 2 · Run the full test suite
+### 2 · Run the SDK Playground 
 
 ```bash
-pnpm test                # Jest + ts-node
+pnpm run build          # builds all workspace packages
+pnpm run playground     # starts Vite dev server
+
+# Open http://localhost:5174/
+# → Upload a test file and immediately download it back.
 ```
+<details> <summary>Step-by-step playground flow (click to expand)</summary>
+Keep the default seed phrase & click Continue
 
-### 3 · Play with the cipher locally
+Choose Testnet & click Continue
 
-```bash
-node examples/encryption/aes256.js <<'EOF'
-Hello, encrypted world!
-EOF
-```
+Click Skip when asked for “Identity”
 
-Expected output:
+Accept the default cluster (e.g. 0x825…) and existing bucket
 
-```
-Ciphertext (base64): ...
-Decrypted again: Hello, encrypted world!
-```
+Skip encryption options (for now)
 
-### 4 · Lint & type-check
+Pick any file to upload → click Continue
 
-```bash
-pnpm lint     # eslint --max-warnings=0
-pnpm build    # tsc --noEmit
-```
+Click the blue link to download the file back
 
-### 5 · Submit your PR
+</details>
 
-1. Fork the repo, push a feature branch `feat/aes256-cipher`.
-2. Open a PR against **`rfp/built-in-encryption`** with the checklist template ticked.
-3. Ensure the GitHub Actions workflow shows all ✅ before requesting review.
 
 ---
 
