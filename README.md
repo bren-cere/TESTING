@@ -1,11 +1,11 @@
-# Developer Console “Top-Up” RFP — 60-Second Overview
+# Developer Console “Top-Up” RFP
 
-- **Problem → Goal**  
-  Developer-Console accounts occasionally run out of the CERE tokens and storage credits they need to push data into the Decentralised Data Cloud (DDC). The **Top-Up** micro-service will detect a low-balance event (or a user request) and automatically fund the account, so builders never hit a hard stop.
+- **Goal**  
+  Developer-Console accounts occasionally run out of credits ($CERE tokens) needed to enjoy an uninterrupted service by the cluster. The **Top-Up** micro-service will detect a low-balance event (or a user request) and automatically fund the account, so builders never hit a hard stop.
 
 - **Scope of Work**  
-  1. **Event watcher** – listens to the Substrate-based DDC chain (or a message queue) for `BalanceLow` events and to an HTTP endpoint for manual top-up requests.  
-  2. **Top-up engine** – computes how many $CERE or quota units to add, then calls the existing `ddcModule.topUp(AccountId, Amount)` extrinsic (or the equivalent REST/GraphQL method exposed by the Developer-Console backend).  
+  1. **Event watcher** – listens to Decentralized Data Cluster (DDC) for `BalanceLow` events and to an HTTP endpoint for manual top-up requests.  
+  2. **Top-up engine** – computes how many credits ($CERE tokens) to add, then calls the existing `ddcModule.topUp(AccountId, Amount)` extrinsic.  
   3. **Idempotent retry & logging** – every attempted top-up is written to PostgreSQL and emits a Prometheus metric; duplicate events are safely ignored.  
   4. **Ops artefacts** – Dockerfile, Kubernetes Helm chart, CI job (GitHub Actions) that runs tests plus an end-to-end script against a local devnet.
 
