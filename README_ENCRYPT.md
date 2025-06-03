@@ -9,7 +9,6 @@ Within the first 2 days we expect you to deliver the first built-in cipher: **AE
   1. **`AES256Cipher` implementation** – pure TypeScript, zero external deps except Node `crypto`.  
   2. **Plug-in registration** – export the class from `@cere-ddc-sdk/core/src/cipher/` alongside `NaclCipher`.  
   3. **Unit tests** – full round-trip coverage (happy path + bad key/iv, tampered ciphertext, etc.).
-  4. **UI integration** - integration in DDC Playground & CLI .
   5. **Docs & Typedoc** – short “how to switch ciphers” snippet in `packages/core/README.md`.
 
 **Deliverables**  
