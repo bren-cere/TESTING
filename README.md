@@ -88,5 +88,3 @@ helm upgrade --install topup ./charts/topup \
 
 With this micro-service in place, every developer using the Cere **Developer Console** gets an uninterrupted DX; the on-call team gets metrics & retries; and the infrastructure remains token-economical thanks to a single, centralised Top-Up logic.
 
-```
-```
