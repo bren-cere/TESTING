@@ -16,7 +16,7 @@
   * README quick-start (below) and change-log  
 
 - **Success criteria**  
-  * A fresh account with ≤ threshold balance is automatically replenished within **5 seconds** on a devnet.  
+  * A fresh account with ≤ threshold balance is automatically replenished within **5 seconds** on testnet.  
   * The full test suite passes in CI; container image publishes to GitHub Packages; Helm install works out-of-the-box.
 
 ---
