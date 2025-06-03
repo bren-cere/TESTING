@@ -27,45 +27,63 @@ Within the first 2 days we expect you to deliver the first built-in cipher: **AE
 
 ---
 
-## Quick-Start for External Contributors
+## Quick Start Guide 🚀
 
-### 1 · Clone & bootstrap
+### 1. Setup environment
 
-```bash
-# 1. Clone the repo
-git clone https://github.com/Cerebellum-Network/cere-ddc-sdk-js.git
-cd cere-ddc-sdk-js
+1. Clone GitHub repository: [`cere-ddc-sdk-js`](#)
+2. Download and install Node.js **v18.17.1** [Node.js – Download Node.js](https://nodejs.org/)
 
-# 2. Use Node.js v18.17.1 (recommended); then install deps
-pnpm i         # workspace-wide
-````
+### 2. Run DDC SDK Playground
 
-### 2 · Run the SDK Playground 
+1. Install dependencies:
+    ```bash
+    npm i
+    ```
+2. Build packages and playground application
+    ```bash
+    npm run build
+    ```
+3. Run playground application
+    ```bash
+    npm run playground
+    ```
+4. Open [http://localhost:5174/](http://localhost:5174/)
+5. Upload and download file to ensure it’s working
+   1. Keep default Seed phrase as is and click `Continue` button
+   2. Select `Testnet` and click `Continue` button
+   3. Click `Skip`
+   4. Keep default Cluster (`0x825...`) and use existing bucket `573062`
+   5. Click `Skip`
+   6. Select file on your local file system you would like to upload and click `Continue`
+   7. Click a blue link to download a file
 
-```bash
-pnpm run build          # builds all workspace packages
-pnpm run playground     # starts Vite dev server
+### 3. Run DDC CLI
 
-# Open http://localhost:5174/
-# → Upload a test file and immediately download it back.
-```
-<details> <summary>Step-by-step playground flow (click to expand)</summary>
-Keep the default seed phrase & click Continue
+1. Install `ddc-cli` package
+    ```jsx
+    npm install -g @cere-ddc-sdk/cli
+    ```
+2. Install `npx`
 
-Choose Testnet & click Continue
+    ```jsx
+    npm install -g npx
+    ```
 
-Click Skip when asked for “Identity”
+3. Put any file you would like to upload to the same directory from where you execute commands
+4. Upload file
 
-Accept the default cluster (e.g. 0x825…) and existing bucket
+    ```jsx
+    npx @cere-ddc-sdk/cli upload ./hello-world.txt network=testnet --signer="hybrid label reunion only dawn maze asset draft cousin height flock nation" --bucketId=573062
+    ```
 
-Skip encryption options (for now)
+5. More details and examples you can find here: https://github.com/Cerebellum-Network/cere-ddc-sdk-js/blob/main/packages/cli/README.md
+---
 
-Pick any file to upload → click Continue
-
-Click the blue link to download the file back
-
-</details>
-
+## Resources 📚
+- DDC SDK (Monorepo): [GitHub Link](https://github.com/Cerebellum-Network/cere-ddc-sdk-js)
+- CLI Package: [GitHub Link](https://github.com/Cerebellum-Network/cere-ddc-sdk-js/tree/main/packages/cli)
+- Playground App: [GitHub Link](https://github.com/Cerebellum-Network/cere-ddc-sdk-js/tree/main/playground)
 
 ---
 
