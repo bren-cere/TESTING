@@ -1,6 +1,3 @@
-Below is GitHub-flavoured Markdown you can drop straight into a **README.md**.
-
-````markdown
 # Developer Console “Top-Up” RFP — 60-Second Overview
 
 - **Problem → Goal**  
