@@ -1,14 +1,16 @@
-# DDC SDK “Built-In Encryption” RFP — 60-Second Overview
+# DDC SDK “Built-In Encryption” RFP
 
 **Goal**  
-  Today the DDC SDK encrypts user data only if the *caller* plugs in a cipher (e.g. `NaclCipher`). We want **encryption out-of-the-box** so every developer gets strong, audited protection without extra work.  
-  *Milestone 1* delivers the first built-in cipher: **AES-256** (CBC mode + PKCS7 padding), mirroring the existing `NaclCipher` API.
+Today the DDC SDK encrypts user data only if the *caller* plugs in a cipher (e.g. `NaclCipher`). We want **encryption out-of-the-box** so every developer gets strong, audited protection without extra work.  
+  
+Within the first 2 days we expect you to deliver the first built-in cipher: **AES-256** (CBC mode + PKCS7 padding), mirroring the existing `NaclCipher` API.
 
-**Scope of Work (Milestone 1)**  
+**Scope of Work**  
   1. **`AES256Cipher` implementation** – pure TypeScript, zero external deps except Node `crypto`.  
   2. **Plug-in registration** – export the class from `@cere-ddc-sdk/core/src/cipher/` alongside `NaclCipher`.  
-  3. **Unit tests** – full round-trip coverage (happy path + bad key/iv, tampered ciphertext, etc.).  
-  4. **Docs & Typedoc** – short “how to switch ciphers” snippet in `packages/core/README.md`.
+  3. **Unit tests** – full round-trip coverage (happy path + bad key/iv, tampered ciphertext, etc.).
+  4. **UI integration** - integration in DDC Playground & CLI .
+  5. **Docs & Typedoc** – short “how to switch ciphers” snippet in `packages/core/README.md`.
 
 **Deliverables**  
   * New source under `packages/core/src/cipher/AES256Cipher.ts`  
