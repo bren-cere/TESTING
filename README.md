@@ -4,87 +4,49 @@
   Developer-Console accounts occasionally run out of credits ($CERE tokens) needed to enjoy an uninterrupted service by the cluster. The **Top-Up** micro-service will detect a low-balance event (or a user request) and automatically fund the account, so builders never hit a hard stop.
 
 - **Scope of Work**  
-  1. **Event watcher** – listens to Decentralized Data Cluster (DDC) for `BalanceLow` events and to an HTTP endpoint for manual top-up requests.  
-  2. **Top-up engine** – computes how many credits ($CERE tokens) to add, then calls the existing `ddcModule.topUp(AccountId, Amount)` extrinsic.  
-  3. **Idempotent retry & logging** – every attempted top-up is written to PostgreSQL and emits a Prometheus metric; duplicate events are safely ignored.  
-  4. **Ops artefacts** – Dockerfile, Kubernetes Helm chart, CI job (GitHub Actions) that runs tests plus an end-to-end script against a local devnet.
+  1. **Event Listener** – listens to Decentralized Data Cluster (DDC) for `BalanceLow` events and to an HTTP endpoint for manual top-up requests.  
+  2. **Ramp integration** – trigger an external ramp service that in turn delivers the $CERE tokens into the user account
+  3. **Credit Card Authorisation** – manage credit authorisation by storing a token securily in a database, enable automated top-ups by credit card 
 
 - **Deliverables**  
-  * Source code (TypeScript + Node 20) under `cluster-apps/apps/developer-console/topup-service/`  
-  * Unit & e2e tests (≥ 90 % line coverage)  
-  * Swagger/OpenAPI doc for the `/top-up` HTTP endpoint  
+  * Source code  under `cluster-apps/apps/developer-console/topup-service/`  
+  * Unit & e2e tests (≥ 90 % line coverage)
+  * E2E flow video recording 
   * README quick-start (below) and change-log  
 
 - **Success criteria**  
-  * A fresh account with ≤ threshold balance is automatically replenished within **5 seconds** on testnet.  
+  * A fresh account with ≤ threshold balance is automatically replenished within **5 seconds** (can be on testnet).  
   * The full test suite passes in CI; container image publishes to GitHub Packages; Helm install works out-of-the-box.
 
 ---
 
-## Quick-Start for External Contributors
+## Quick Start Guide 🚀
 
-> **Goal:** get the Top-Up service running locally, prove that an empty account is auto-funded, and run the test suite — all in < 10 minutes.
+**1. Setting Up Your Environment 🛠️**
 
-### 1. Clone & set-up
+- **Clone the Repository**
+  ```bash
+  git clone https://github.com/Cerebellum-Network/cluster-apps.git
+  ```
+- **Payment Provider Test Accounts**
+  - Sign up for a Stripe test account and obtain test API keys.
+- **Configure the Project**
+  - Update configuration files (e.g., `.env`) with your test API keys.
 
-```bash
-git clone https://github.com/Cerebellum-Network/cluster-apps.git
-cd cluster-apps
-pnpm i          # uses the workspace root for all packages
-````
+**2. Running the Base Implementation ⚙️**
 
-### 2. Spin up a local DDC devnet + Postgres
-
-```bash
-# Single-host dev stack
-docker compose -f docker-compose.devnet.yml up -d   # Substrate node + PG + Grafana
-```
-
-### 3. Build & run the Top-Up service
-
-```bash
-cd apps/developer-console/topup-service
-pnpm dev        # hot-reload
-# or, for production-like:
-docker build -t cere/topup .
-docker run --env-file .env.local cere/topup
-```
-
-**Required env vars**
-
-| Variable            | Example                                     | Purpose                            |
-| ------------------- | ------------------------------------------- | ---------------------------------- |
-| `RPC_ENDPOINT`      | `ws://localhost:9944`                       | WebSocket URL of the devnet node   |
-| `TOPUP_AMOUNT`      | `10000000000`                               | Default \$CERE (in plancks) to add |
-| `BALANCE_THRESHOLD` | `5000000000`                                | Trigger when balance < threshold   |
-| `PG_URL`            | `postgres://cere:cere@localhost:5432/topup` | Event-log DB                       |
-
-### 4. Run the acceptance tests
-
-```bash
-pnpm test           # unit + integration
-pnpm test:e2e       # spins a disposable devnet, drains an account, asserts top-up
-```
-
-### 5. Verify it works
-
-```bash
-# Ask the faucet endpoint to top up `ALICE`
-curl -X POST http://localhost:7070/top-up \
-  -H 'Content-Type: application/json' \
-  -d '{"account":"5GrwvaEF...", "reason":"manual"}'
-
-# Tail the logs or hit Prometheus on :9090 to see metrics
-```
-
-### 6. One-line deploy to Kubernetes
-
-```bash
-helm upgrade --install topup ./charts/topup \
-     --set image.tag=$(git rev-parse --short HEAD)
-```
-
----
-
-With this micro-service in place, every developer using the Cere **Developer Console** gets an uninterrupted DX; the on-call team gets metrics & retries; and the infrastructure remains token-economical thanks to a single, centralised Top-Up logic.
+- **Install Dependencies**
+  ```bash
+  npm install
+  # or
+  yarn install
+  ```
+- **Start the Application**
+  ```bash
+  npm start
+  # or
+  yarn start
+  ```
+- **Test the Base Functionality**
+  - Access the Developer Console at `http://localhost:3000` and attempt a test top-up.
 
