@@ -2,7 +2,7 @@
 
 - **Goal**  
   Developer-Console accounts occasionally run out of credits ($CERE tokens) needed to enjoy an uninterrupted service by the cluster. The **Top-Up** micro-service will detect a low-balance event (or a user request) and automatically fund the account, so builders never hit a hard stop.
-
+[image](https://github.com/user-attachments/assets/123965b4-ba52-42e3-b110-07889f49fffc)
 - **Scope of Work**  
   1. **Event Listener** – listens to Decentralized Data Cluster (DDC) for `BalanceLow` events and to an HTTP endpoint for manual top-up requests.  
   2. **Ramp integration** – trigger an external ramp service that in turn delivers the $CERE tokens into the user account
