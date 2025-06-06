@@ -8,7 +8,7 @@
 - **Scope of Work**
     1. **I/O**
        - Input: amount, wallet_id, Credit Card authorisation token
-       - Data stored: Vault-tokenised credit-card auth (PCI-DSS SAQ-A)
+       - Data stored: Vault-tokenised credit-card auth
        - Processing: Charge card → receive auth-ID → call external ramp service for on-chain top-up
        - Output → “JSON {tx_hash, timestamp} + webhook callback”
     2. **Trigger & Listener**
