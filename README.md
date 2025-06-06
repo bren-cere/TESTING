@@ -19,7 +19,7 @@
     5. **Credit Card Authorisation**
        - manage credit authorisation by storing a token securily in a database, enabling automated top-ups by pre-authorising the credit card
       
-  **Estimated development time**: 1 day
+  **Estimated development time core functionality**: 1 day
 
 - **Deliverables**  
   * Source code  under `cluster-apps/apps/developer-console/topup-service/`  
