@@ -9,13 +9,15 @@
     1. **I/O**
        - Input: amount, wallet_id, Credit Card authorisation token
        - Data stored: Vault-tokenised credit-card auth (PCI-DSS SAQ-A)
-       - Processing: Charge card → receive auth-ID → call external ramp service for on-chain payout
+       - Processing: Charge card → receive auth-ID → call external ramp service for on-chain top-up
        - Output → “JSON {tx_hash, timestamp} + webhook callback”
     2. **Trigger & Listener**
        - Event source: low-balance webhook
        - Listener: top-up endpoint
-    3. **Ramp integration** – trigger an external ramp service that in turn delivers the $CERE tokens into the user account (can be a placeholder contract/wallet)
-    4. **Credit Card Authorisation** – manage credit authorisation by storing a token securily in a database, enabling automated top-ups by pre-authorising the credit card 
+    3. **Ramp integration**
+       – trigger an external ramp service that in turn delivers the $CERE tokens into the user account (can be a placeholder contract/wallet)
+    5. **Credit Card Authorisation**
+       – manage credit authorisation by storing a token securily in a database, enabling automated top-ups by pre-authorising the credit card 
 
 - **Deliverables**  
   * Source code  under `cluster-apps/apps/developer-console/topup-service/`  
