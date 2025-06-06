@@ -15,9 +15,11 @@
        - Event source: low-balance webhook
        - Listener: top-up endpoint
     3. **Ramp integration**
-       – trigger an external ramp service that in turn delivers the $CERE tokens into the user account (can be a placeholder contract/wallet)
+       - trigger an external ramp service that in turn delivers the $CERE tokens into the user account (can be a placeholder contract/wallet)
     5. **Credit Card Authorisation**
-       – manage credit authorisation by storing a token securily in a database, enabling automated top-ups by pre-authorising the credit card 
+       - manage credit authorisation by storing a token securily in a database, enabling automated top-ups by pre-authorising the credit card
+      
+  **Estimated development time**: 1 day
 
 - **Deliverables**  
   * Source code  under `cluster-apps/apps/developer-console/topup-service/`  
