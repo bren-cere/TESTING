@@ -5,7 +5,7 @@
 
 ## 🌲Data Model / Endpoints
 
-Flow for topping up a customer's DDC account, integrating payment and blockchain services, all managed within a cluster.
+![DDC Topup Data Model](https://raw.githubusercontent.com/bren-cere/TESTING/main/assets/ddc_topup_datamodel.png)
 
 ---
 
