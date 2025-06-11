@@ -3,63 +3,110 @@
 - **Goal**
   We need a service that can top-up user accounts by charging a stored credit card and triggering the on-chain transaction through an external ramp service. The **Top-Up** micro-service listen to a low-balance event (or a user request) and automatically fund the account, so builders never hit a hard stop.
 
-![image](https://github.com/user-attachments/assets/123965b4-ba52-42e3-b110-07889f49fffc)
+## 🌲Data Model / Endpoints
 
-- **Scope of Work**
-    1. **I/O**
-       - Input: amount, wallet_id, Credit Card authorisation token
-       - Data stored: Vault-tokenised credit-card auth
-       - Processing: Charge card → receive auth-ID → call external ramp service for on-chain top-up
-       - Output → “JSON {tx_hash, timestamp} + webhook callback”
-    2. **Trigger & Listener**
-       - Event source: low-balance webhook
-       - Listener: top-up endpoint
-    3. **Ramp integration**
-       - trigger an external ramp service that in turn delivers the $CERE tokens into the user account (can be a placeholder contract/wallet)
-    5. **Credit Card Authorisation**
-       - manage credit authorisation by storing a token securily in a database, enabling automated top-ups by pre-authorising the credit card
-      
-  **Estimated development time core functionality**: 1 day
-
-- **Deliverables**  
-  * Source code  under `cluster-apps/apps/developer-console/topup-service/`  
-  * Unit & e2e tests (≥ 90 % line coverage)
-  * E2E flow video recording 
-  * README quick-start (below) and change-log  
-
-- **Success criteria**  
-  * A fresh account with ≤ threshold balance is automatically replenished within **5 seconds** (can be on testnet).  
-  * The full test suite passes in CI; container image publishes to GitHub Packages; Helm install works out-of-the-box.
+Flow for topping up a customer's DDC account, integrating payment and blockchain services, all managed within a cluster.
 
 ---
 
-## Quick Start Guide 🚀
+  **Estimated development time core functionality**: 1 day
 
-**1. Setting Up Your Environment 🛠️**
+---
 
-- **Clone the Repository**
-  ```bash
-  git clone https://github.com/Cerebellum-Network/cluster-apps.git
-  ```
-- **Payment Provider Test Accounts**
-  - Sign up for a Stripe test account and obtain test API keys.
-- **Configure the Project**
-  - Update configuration files (e.g., `.env`) with your test API keys.
+## User Stories
 
-**2. Running the Base Implementation ⚙️**
+- **User Successfully Tops Up DDC Wallet via Credit/Debit Card**
+  - User logs in, enters amount and card details, payment is processed, DDC balance increases, confirmation displayed, transaction recorded.
 
-- **Install Dependencies**
-  ```bash
-  npm install
-  # or
-  yarn install
-  ```
-- **Start the Application**
-  ```bash
-  npm start
-  # or
-  yarn start
-  ```
-- **Test the Base Functionality**
-  - Access the Developer Console at `http://localhost:3000` and attempt a test top-up.
+- **Payment Security and Compliance**
+  - Card fields rendered via secure, PCI DSS-compliant IFRAME; raw card data never stored.
 
+- **Handling Failed or Declined Payments**
+  - Clear error messages for failed payments, no funds deducted, failed transactions logged.
+
+- **Payment Method Management**
+  - Users can add, remove, or update payment methods securely; changes are immediate and confirmed.
+
+---
+
+# 🥡 Contribution Guide
+
+To integrate the Top-Up component into the Developer Console UI, follow these structured steps for both the frontend and backend implementations:
+
+### **Frontend: Developer Console UI Integration**
+
+- **Branch Creation**
+    
+    Begin by creating a new branch from the development branch to isolate your Top-Up component changes.
+    
+- **Repository Setup**
+    
+    Clone the main project repository to your local environment:
+    
+    ```jsx
+    git clone https://github.com/Cerebellum-Network/cluster-apps.git
+    ```
+    
+- **Payment Provider Configuration**
+    - Register for a Stripe test account and generate test API keys as per [Stripe's documentation](https://docs.stripe.com/keys).
+    - Ensure these keys are stored securely and used exclusively in test mode.
+    - Clone the Developer Console UI repository and update the configuration files (e.g., `.env`) with your Stripe test keys to enable payment processing in a safe environment.
+- **Dependency Installation**
+    
+    Navigate to your project directory and install all required dependencies:
+    
+    ```jsx
+    npm install
+    ```
+    
+    or
+    
+    ```jsx
+    yarn install
+    ```
+    
+- **Local Development**
+    
+    Start the application locally:
+    
+    ```jsx
+    npm start
+    ```
+    
+    or
+    
+    ```jsx
+    yarn start
+    ```
+    
+    Access the Developer Console at `http://localhost:3000` and verify the Top-Up functionality using test payment methods.
+    
+
+### **Backend: Customer Payment Service (CPS) Implementation**
+
+- **Repository and Deployment**
+    
+    Clone follwing repository: 
+    
+    ```jsx
+    git clone https://github.com/Cerebellum-Network/customer-payment-service
+    ```
+    
+    Ensure the backend is containerized by providing a Docker image, enabling local testing and seamless deployment on Kubernetes clusters.
+    
+- **Key Backend Responsibilities**
+    - Securely initiate and manage payment flows (SetupIntent and PaymentIntent) with the payment provider (e.g., Stripe).
+    - Never store raw card data; instead, use payment method tokens or references provided by the payment gateway.
+    - Handle webhook events for asynchronous payment status updates and reconciliation.
+    - Support both one-time and recurring (auto top-up) payments using saved payment methods.
+
+**Testing and Validation**
+
+- Use the Developer Console UI to simulate top-up transactions with test cards.
+- Ensure all payment flows are executed securely and that sensitive card data is never exposed to the frontend or stored on your servers.
+- Validate that the backend correctly processes payments, updates DDC wallet balances, and manages payment method tokens for future transactions.
+
+**Deployment**
+
+- Provide clear documentation and Docker images to facilitate both local and production deployments.
+- Ensure environment variables and configuration steps are well-documented for smooth integration and scaling.
