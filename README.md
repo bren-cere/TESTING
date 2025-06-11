@@ -1,11 +1,15 @@
 # Developer Console “Top-Up” RFP
 Build a Top-Up micro-service that automatically keeps Cere developer accounts funded with a stored credit card, preventing service interruptions from low balances. Your solution will be used daily across the ecosystem, making life easier for developers worldwide 🤝
 
-Deliverables:
-- **Frontend:** Developer Console UI Integration
-- **Backend:** Customer Payment Service (CPS) Implementation
-- **Budget:** $1.000 USDC
-- **Estimated development time core functionality**: 2 days
+Components:
+- Frontend: Developer Console UI Integration
+- Backend: Customer Payment Service (CPS) Implementation
+
+Budget & timing:
+-  Budget: $1.000 USDC 
+-  Estimated development time core functionality: 2 days
+
+**🚨 Reminder:** before diving into your proposal, make sure to carefully review the [**Contribution Guidelines**](..%2F..%2FREADME.md). ✅
 
 ## Data Model / Endpoints
 
@@ -24,9 +28,6 @@ Deliverables:
 
 - **Payment Method Management**
   - Users can add, remove, or update payment methods securely; changes are immediate and confirmed.
-      
-## Quickstart
-To integrate the Top-Up component into the Developer Console UI, follow these structured steps for both the frontend and backend implementations: https://github.com/Cerebellum-Network/cluster-apps/blob/dev/apps/developer-console/developer_console_topup.md#-contribution-guide
 
 ## Testing & Deployment
 
@@ -40,3 +41,6 @@ To integrate the Top-Up component into the Developer Console UI, follow these st
 
 - Provide clear documentation and Docker images to facilitate both local and production deployments.
 - Ensure environment variables and configuration steps are well-documented for smooth integration and scaling.
+  
+## Quickstart
+To integrate the Top-Up component into the Developer Console UI, follow these structured steps for both the frontend and backend implementations: [Developer Console Top-Up Documentation](https://github.com/Cerebellum-Network/cluster-apps/blob/dev/apps/developer-console/developer_console_topup.md#-contribution-guide)
